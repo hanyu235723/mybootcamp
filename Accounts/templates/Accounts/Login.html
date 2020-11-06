@@ -1,0 +1,48 @@
+{% extends "Accounts\Base.html" %}
+
+{% block content %}
+<div>
+  {% if next %}
+  {% if user.is_authenticated %}
+  <p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+  {% else %}
+  <p>Please login to see this page.</p>
+  {% endif %}
+  {% endif %}
+    <!-- Custom styles for this template -->
+  {% load static %}
+  <link href="{% static 'Accounts/signin.css' %}" rel="stylesheet">
+      <form method="POST" class="form-signin" autocomplete="off">
+      {% csrf_token %}
+      {% load myfilter %}
+      <img class="mb-4" src="{% static 'Accounts/assets/brand/bootstrap-solid.svg' %}" alt="" width="72" height="72">
+      <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+      {% for field in form %}
+        <p class="sr-only"> {{ field.label_tag }} </p>
+        <p> {{ field|addattr:'form-control' }} {{ field.errors }}  </p>
+      {% endfor %}
+      <div class="checkbox mb-3">
+        <label>  <input type="checkbox" value="remember-me"> Remember me    </label>
+      </div>
+      {% if form.non_field_errors %}
+      <ul class='form-errors'>
+        {% for error in form.non_field_errors %}
+           <p>{{ error }}</p>
+        {% endfor %}
+      </ul>
+      {% endif %}
+      <button class="btn btn-lg btn-primary btn-block" type="submit" id='but1'>Sign in</button>
+      <div>
+        <a class="btn btn-light1" href="{% url 'Accounts:signup' %}" role="button">Create New Account</a>
+    </form>
+    <script>
+      $(document).ready(function () {
+        $("#but1").click(function () {
+          $(".form-errors p").css("display", "block");
+        });
+      });
+    </script>
+
+</div>
+{% endblock content %}

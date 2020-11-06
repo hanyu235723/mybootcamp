@@ -1,0 +1,41 @@
+{% extends "Accounts\Base.html" %}
+
+{% block content %}
+<ul>
+  {% for friend in friend_list %}
+  <li>{{ friend.first_name}}</li>
+  {% empty %}
+  <p>{{ currentuser.first_name }} you still have no friends connected~</p>
+  {% endfor %}
+</ul>
+
+<form action="" method="POST" class="form-signin">
+  {% csrf_token %}
+  <div class="input-group">
+    <select class="custom-select" id="inputGroupSelect04">
+      <option selected>Choose a friend...</option>
+      {% for user in allusers %}
+      <option value={{ user.email }}, friend={{ user }}>{{ user.first_name}},{{ user.last_name}}</option>
+      {% empty %}
+      <li>users are not available to display</li>
+      {% endfor %}
+
+    </select>
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" type="submit">Add to friends</button>
+    </div>
+    <input type='hidden' id="friend" name="friend" value="" />
+
+  </div>
+</form>
+
+<script type="text/javascript" language="javascript">
+  $(function () {
+    $("#inputGroupSelect04").change(function () {
+      var selecedFriend = $('option:selected', this).attr('friend');
+      $('#friend').val(selecedFriend);
+    });
+  });
+</script>
+
+{% endblock content %}

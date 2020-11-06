@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Document</title>
+
+  <link rel="canonical" href="https://getbootstrap.com/docs/4.5/examples/sign-in/">
+
+  <!-- Bootstrap core CSS -->
+  {% load static %}
+  <link href="{% static 'Accounts/assets/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  {% load static %}
+  <link href="{% static 'Accounts/signin.css' %}" rel="stylesheet">
+
+</head>
+
+<body class="text-center">
+  <form method="post" class="form-signin">
+    {%load static %}
+    <img class="mb-4" src="{% static 'Accounts/assets/brand/bootstrap-solid.svg' %}" alt="" width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal">Register a new User!</h1>
+    <div>
+
+      {% csrf_token %}
+      {% load myfilter %}
+     <form action=""class='form-signin'>
+         {% for field in form %}
+         <label class="sr-only" for="{{ field.auto_id }}">{{ field.label }}</label>
+         {{ field|addattr:'form-control' }}
+        
+         {% if field.errors %}
+         <div><strong>{{ error }}</strong></div>
+         {% endif %}
+      {% endfor %}
+      <button type="submit">Sign up</button>
+    </div>
+  </form>
+
+</body>
+
+</html>
